@@ -486,12 +486,76 @@
   h3.sub { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.75rem; }
   p.muted { font-size: 14px; color: var(--ink-3); line-height: 1.6; }
 
+  /* HAMBURGER */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink-2);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    z-index: 99;
+    padding: 0.5rem 0 1rem;
+  }
+
+  .nav-drawer.open { display: block; }
+
+  .nav-drawer a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    font-size: 15px;
+    color: var(--ink-2);
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .nav-drawer a.active { color: var(--accent); font-weight: 500; }
+
   @media (max-width: 640px) {
     nav { padding: 0 1rem; }
-    .page-hero, .page-body { padding-left: 1.25rem; padding-right: 1.25rem; }
-    .page-title { font-size: 30px; }
-    .timeline-item { grid-template-columns: 80px 1px 1fr; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .page-hero { padding: 2rem 1.25rem 1.75rem; }
+    .page-body { padding: 1.5rem 1.25rem; }
+    .page-title { font-size: 28px; }
+    .page-desc { font-size: 15px; }
+    .timeline-item { grid-template-columns: 72px 1px 1fr; gap: 0 1rem; }
+    .timeline-date { font-size: 11px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
     .footnote { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .drop-header { flex-direction: column; gap: 0.5rem; }
+    .research-item { gap: 0.75rem; }
+    .pillars { gap: 6px; }
+    .pillar-chip { font-size: 11px; padding: 5px 10px; }
   }
 </style>
 </head>
@@ -520,7 +584,17 @@
       <li><a href="#" onclick="showPage('prototypes')">Prototypes</a></li>
       <li><a href="#" onclick="showPage('research')">Resources</a></li>
     </ul>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="#" onclick="showPage('plan'); closeDrawer()">Project Plan</a>
+    <a href="#" onclick="showPage('principles'); closeDrawer()">Design Principles</a>
+    <a href="#" onclick="showPage('prototypes'); closeDrawer()">Prototypes</a>
+    <a href="#" onclick="showPage('research'); closeDrawer()">Resources</a>
+  </div>
 
   <!-- ── PAGE: PROJECT PLAN ── -->
   <div class="page active" id="page-plan">
@@ -869,14 +943,29 @@
     document.getElementById("pw-error").textContent = "";
   });
 
+  function toggleDrawer() {
+    const drawer = document.getElementById('nav-drawer');
+    const hamburger = document.getElementById('hamburger');
+    drawer.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  }
+
+  function closeDrawer() {
+    document.getElementById('nav-drawer').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
   function showPage(id) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.querySelectorAll(".nav-links a").forEach(a => a.classList.remove("active"));
+    document.querySelectorAll(".nav-drawer a").forEach(a => a.classList.remove("active"));
     document.getElementById("page-" + id).classList.add("active");
-    const links = document.querySelectorAll(".nav-links a");
     const pages = ["plan", "principles", "prototypes", "research"];
     const idx = pages.indexOf(id);
-    if (links[idx]) links[idx].classList.add("active");
+    const desktopLinks = document.querySelectorAll(".nav-links a");
+    const drawerLinks = document.querySelectorAll(".nav-drawer a");
+    if (desktopLinks[idx]) desktopLinks[idx].classList.add("active");
+    if (drawerLinks[idx]) drawerLinks[idx].classList.add("active");
     window.scrollTo(0, 0);
     return false;
   }
