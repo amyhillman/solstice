@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sunbit · Project Solstice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F3EE;
+    --surface: #FDFCFA;
+    --surface-alt: #EDEAE3;
+    --ink: #1A1814;
+    --ink-2: #4A4740;
+    --ink-3: #8A877F;
+    --accent: #C85A2A;
+    --accent-light: #F5EDE7;
+    --border: rgba(26,24,20,0.10);
+    --border-strong: rgba(26,24,20,0.18);
+    --gold: #B8933A;
+    --gold-light: #F7F1E3;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PASSWORD SCREEN ── */
+  #lock-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg);
+  }
+
+  .lock-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+
+  .lock-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 2.5rem;
+  }
+
+  .lock-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .lock-sub {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-bottom: 2rem;
+  }
+
+  .lock-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    background: var(--bg);
+    border: 0.5px solid var(--border-strong);
+    border-radius: 8px;
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.15s;
+    text-align: center;
+    letter-spacing: 0.12em;
+  }
+
+  .lock-input:focus { border-color: var(--accent); }
+
+  .lock-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--ink);
+    color: #FDFCFA;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .lock-btn:hover { background: var(--accent); }
+
+  .lock-error {
+    font-size: 13px;
+    color: var(--accent);
+    margin-top: 0.75rem;
+    min-height: 18px;
+  }
+
+  /* ── MAIN APP ── */
+  #app { display: none; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 56px;
+  }
+
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0 1rem;
+    height: 56px;
+    line-height: 56px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-3);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+
+  /* PAGE LAYOUT */
+  .page { display: none; padding: 0; }
+  .page.active { display: block; }
+
+  .page-hero {
+    padding: 4rem 3rem 3rem;
+    border-bottom: 0.5px solid var(--border);
+    max-width: 860px;
+  }
+
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .page-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    max-width: 600px;
+  }
+
+  .page-body { padding: 2.5rem 3rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .card-sm {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-gap { margin-top: 2.5rem; }
+
+  /* PLAN TIMELINE */
+  .timeline { position: relative; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1px 1fr;
+    gap: 0 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-date {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    text-align: right;
+    padding-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .timeline-spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timeline-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1.5px var(--accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .timeline-dot.done { background: var(--ink-3); box-shadow: 0 0 0 1.5px var(--ink-3); }
+  .timeline-dot.future { background: var(--surface); box-shadow: 0 0 0 1.5px var(--border-strong); }
+
+  .timeline-line {
+    flex: 1;
+    width: 1px;
+    background: var(--border-strong);
+    margin-top: 4px;
+  }
+
+  .timeline-content { padding-bottom: 0.5rem; }
+
+  .timeline-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-detail {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  .tag-active { background: var(--accent-light); color: var(--accent); }
+  .tag-done { background: var(--surface-alt); color: var(--ink-3); }
+  .tag-next { background: var(--gold-light); color: var(--gold); }
+
+  /* PRINCIPLES */
+  .principle-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    color: var(--border-strong);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .principle-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .principle-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+
+  /* PROTOTYPE DROPS */
+  .drop-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .drop-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .drop-week {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+
+  .drop-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .drop-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-2);
+    text-decoration: none;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.12s;
+  }
+
+  .drop-link:hover { background: var(--surface-alt); }
+
+  .drop-link.placeholder {
+    color: var(--ink-3);
+    border-style: dashed;
+    cursor: default;
+  }
+
+  .drop-body {
+    padding: 1.25rem 1.5rem;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .drop-tags { padding: 0 1.5rem 1.25rem; }
+
+  /* RESEARCH */
+  .research-item {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .research-item:last-child { border-bottom: none; }
+
+  .research-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--surface-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    color: var(--ink-2);
+  }
+
+  .research-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+
+  .research-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .research-meta {
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+  .research-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .research-link:hover { text-decoration: underline; }
+
+  /* PILLAR CHIPS */
+  .pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1.5rem;
+  }
+
+  .pillar-chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 0.5px solid var(--border-strong);
+    color: var(--ink-2);
+    background: var(--surface);
+  }
+
+  /* FOOTER NOTE */
+  .footnote {
+    font-size: 12px;
+    color: var(--ink-3);
+    padding: 2rem 3rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* UTILITY */
+  h3.sub { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 0.75rem; }
+  p.muted { font-size: 14px; color: var(--ink-3); line-height: 1.6; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .page-hero, .page-body { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .page-title { font-size: 30px; }
+    .timeline-item { grid-template-columns: 80px 1px 1fr; }
+    .footnote { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo">Sunbit · Internal</div>
+    <div class="lock-title">Project Solstice</div>
+    <div class="lock-sub">Passphrase required</div>
+    <input class="lock-input" type="password" id="pw-input" placeholder="···" autocomplete="off" />
+    <button class="lock-btn" onclick="checkPassword()">Enter →</button>
+    <div class="lock-error" id="pw-error"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <nav>
+    <a href="#" class="nav-brand" onclick="showPage('plan')">Sunbit · Project Solstice</a>
+    <ul class="nav-links">
+      <li><a href="#" class="active" onclick="showPage('plan')">Project Plan</a></li>
+      <li><a href="#" onclick="showPage('principles')">Design Principles</a></li>
+      <li><a href="#" onclick="showPage('prototypes')">Prototypes</a></li>
+      <li><a href="#" onclick="showPage('research')">Research</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── PAGE: PROJECT PLAN ── -->
+  <div class="page active" id="page-plan">
+    <div class="page-hero">
+      <div class="page-eyebrow">Project Solstice · Project Plan</div>
+      <h1 class="page-title">2030 Experience<br><em>Design Program</em></h1>
+      <p class="page-desc">Evolving Sunbit from a POS lending company into a full financial platform built on trust. This is the working plan, updated as the work moves.</p>
+      <div class="pillars">
+        <span class="pillar-chip">BNPL Card</span>
+        <span class="pillar-chip">Cash Advance</span>
+        <span class="pillar-chip">Personal Loans</span>
+        <span class="pillar-chip">Tiered Membership</span>
+        <span class="pillar-chip">Super App</span>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <div class="section-label">Timeline</div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-date">Apr – May 2026</div>
+          <div class="timeline-spine"><div class="timeline-dot done"></div><div class="timeline-line"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Onboarding & Discovery</div>
+            <div class="timeline-detail">Sentiment analysis (4,000+ reviews), call center visit, competitive landscape, architecture deep-dive, brand positioning alignment with Shachar.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-done">Complete</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">May 27–28</div>
+          <div class="timeline-spine"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">NYC Leadership Workshop</div>
+            <div class="timeline-detail">Build vs. rebuild decision. Clickable prototype + competitive research. Attendees: Amy, Einav, Ornit, Yair, Arkadi, Bill Walsh.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-active">Immediate</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Q3 2026</div>
+          <div class="timeline-spine"><div class="timeline-dot future"></div><div class="timeline-line"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Design Program Begins</div>
+            <div class="timeline-detail">Full-fledged experience design work across five pillars. Customer research to close the insight gap on multi-product expectations. Maya returns from leave in September.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-next">Up next</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Q4 2026 – Q1 2027</div>
+          <div class="timeline-spine"><div class="timeline-dot future"></div><div class="timeline-line"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">MVP Build & Rebrand Alignment</div>
+            <div class="timeline-detail">Design in lockstep with engineering build. Rebrand (Shachar leading) lands simultaneously with 2030 v1 launch target.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-next">Planned</span></div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Early 2027</div>
+          <div class="timeline-spine"><div class="timeline-dot future"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">MVP Launch</div>
+            <div class="timeline-detail">2030 platform v1 in market. New brand. Intent-based navigation. Full trust lifecycle from POS entry to multi-product relationship.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-next">Target</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-gap">
+        <div class="section-label">Key open questions</div>
+        <div class="grid-2">
+          <div class="card-sm">
+            <h3 class="sub">Build vs. rebuild</h3>
+            <p class="muted">Existing Sunbit app or greenfield? Primary decision at NYC. The experience answer: can the current architecture support trust-state persistence across products?</p>
+          </div>
+          <div class="card-sm">
+            <h3 class="sub">Customer research gap</h3>
+            <p class="muted">Little to no existing research on what Sunbit customers want from a multi-product experience. Should give the room pause before committing to irreversible architecture.</p>
+          </div>
+          <div class="card-sm">
+            <h3 class="sub">PM governance model</h3>
+            <p class="muted">Dedicated PM for 2030 or four pillar leads serving that function collectively? Open question that affects how the program runs in Q3.</p>
+          </div>
+          <div class="card-sm">
+            <h3 class="sub">Super App ownership</h3>
+            <p class="muted">Organizational ownership of the Super App layer remains undefined. Bill has strong interest. Needs clarity before design work begins at scale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span>Project Solstice · Sunbit 2030 Experience · Confidential</span>
+      <span>Amy Hillman · Head of Product Design · Updated June 2026</span>
+    </div>
+  </div>
+
+  <!-- ── PAGE: DESIGN PRINCIPLES ── -->
+  <div class="page" id="page-principles">
+    <div class="page-hero">
+      <div class="page-eyebrow">Project Solstice · Design Principles</div>
+      <h1 class="page-title">What the experience<br><em>must do.</em></h1>
+      <p class="page-desc">These are the non-negotiables — the experience commitments that should survive every architectural and product decision made between now and launch.</p>
+    </div>
+
+    <div class="page-body">
+      <div class="section-label">Core principles</div>
+      <div class="grid-2">
+
+        <div class="card">
+          <div class="principle-num">01</div>
+          <div class="principle-title">Trust is earned at every transition</div>
+          <div class="principle-body">Every moment a customer moves between products — from BNPL to Card, from Card to Cash Advance — is a trust event, not a navigation event. The experience must acknowledge and honor that. No silent state changes. No invisible eligibility gates.</div>
+        </div>
+
+        <div class="card">
+          <div class="principle-num">02</div>
+          <div class="principle-title">Intent over menu</div>
+          <div class="principle-body">The Super App is not a product catalog. It routes to the right financial tool based on what the customer is trying to do. "I need $400 this week" is the input. The platform surfaces the best option given their profile, history, and tier. Design for the job, not the product.</div>
+        </div>
+
+        <div class="card">
+          <div class="principle-num">03</div>
+          <div class="principle-title">State is visible and consistent</div>
+          <div class="principle-body">A customer with a BNPL history, an active Cash Advance, and a Membership tier should experience one coherent Sunbit relationship — not three products sharing a login. Membership tier and product eligibility must say the same thing at the same time.</div>
+        </div>
+
+        <div class="card">
+          <div class="principle-num">04</div>
+          <div class="principle-title">Proactive beats reactive</div>
+          <div class="principle-body">Don't wait for customers to discover they're eligible for more. The platform should surface relevant next steps — a new product tier, an available loan, a payment insight — at the right moment, with the right framing. The financial partner model is proactive by definition.</div>
+        </div>
+
+        <div class="card">
+          <div class="principle-num">05</div>
+          <div class="principle-title">Built for the Mindful Maximizer</div>
+          <div class="principle-body">The target customer optimizes across the full credit spectrum. They are not looking for access — they are looking for the best possible outcome. Design that treats them as sophisticated agents, not distressed borrowers. Every interaction should reinforce that Sunbit sees their potential.</div>
+        </div>
+
+        <div class="card">
+          <div class="principle-num">06</div>
+          <div class="principle-title">Architecture must outlast the app</div>
+          <div class="principle-body">The 2030 platform will launch as a mobile app. The intent layer and customer state must persist beyond it — voice, agents, web, external surfaces. Decisions made now must support a customer relationship that lives past any single channel. That capability cannot be retrofitted.</div>
+        </div>
+
+      </div>
+
+      <div class="section-gap">
+        <div class="section-label">What this means for NYC</div>
+        <div class="card">
+          <p style="font-size: 15px; line-height: 1.7; color: var(--ink-2);">The current app's failure to communicate trust state across products — silent card removals, invisible eligibility changes, no state on re-entry — is not a bug list. It's an architectural signal. The question for the room is not whether we fix the current app. The question is whether any architecture we choose can actually support these principles at scale, and what we don't yet know about our customers that should make us cautious about irreversible decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span>Project Solstice · Sunbit 2030 Experience · Confidential</span>
+      <span>Amy Hillman · Head of Product Design · Updated June 2026</span>
+    </div>
+  </div>
+
+  <!-- ── PAGE: PROTOTYPES ── -->
+  <div class="page" id="page-prototypes">
+    <div class="page-hero">
+      <div class="page-eyebrow">Project Solstice · Prototype Drops</div>
+      <h1 class="page-title">Working prototypes,<br><em>week by week.</em></h1>
+      <p class="page-desc">These are thinking tools, not final designs. Each drop illustrates a hypothesis about the 2030 experience — shared early to keep the conversation grounded in something real.</p>
+    </div>
+
+    <div class="page-body">
+      <div class="section-label">Drops</div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+        <div class="drop-card">
+          <div class="drop-header">
+            <div>
+              <div class="drop-week">Week 5 · May 2026</div>
+              <div class="drop-title">NYC Workshop Prototype — 2030 App Vision</div>
+            </div>
+            <a href="PROTOTYPE_LINK_HERE" class="drop-link" target="_blank">Open ↗</a>
+          </div>
+          <div class="drop-body">Intent-driven navigation for an existing Sunbit customer. Entry from POS. Multi-product eligibility surfaced proactively. Trust transition moments made visible. Built for the NYC workshop conversation — illustrates what the experience must do, not how it's built.</div>
+          <div class="drop-tags">
+            <span class="tag tag-active">Live</span>
+            <span class="tag tag-done">NYC Workshop</span>
+            <span class="tag tag-done">Existing Customer Flow</span>
+          </div>
+        </div>
+
+        <!-- NEXT DROP: copy block below, uncomment, paste above previous drop, fill in details
+        <div class="drop-card">
+          <div class="drop-header">
+            <div>
+              <div class="drop-week">Week · Month 2026</div>
+              <div class="drop-title">TITLE HERE</div>
+            </div>
+            <a href="LINK_HERE" class="drop-link" target="_blank">Open ↗</a>
+          </div>
+          <div class="drop-body">DESCRIPTION HERE</div>
+          <div class="drop-tags">
+            <span class="tag tag-active">Live</span>
+            <span class="tag tag-done">TAG</span>
+          </div>
+        </div>
+        -->
+
+      </div>
+
+      <div class="section-gap">
+        <div class="section-label">Workflow</div>
+        <div class="card-sm">
+          <p class="muted">Figma assets + design system + specs + PRD → Claude Design → GitHub → deployed shareable link. Prototypes are deployed to GitHub Pages and linked above. To iterate: edit in Claude Design, push to repo, link updates automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <span>Project Solstice · Sunbit 2030 Experience · Confidential</span>
+      <span>Amy Hillman · Head of Product Design · Updated June 2026</span>
+    </div>
+  </div>
+
+  <!-- ── PAGE: RESEARCH ── -->
+  <div class="page" id="page-research">
+    <div class="page-hero">
+      <div class="page-eyebrow">Project Solstice · Design Research</div>
+      <h1 class="page-title">Evidence base<br><em>and signals.</em></h1>
+      <p class="page-desc">Primary research, competitive analysis, and customer signals informing the 2030 experience. Updated as new material is added.</p>
+    </div>
+
+    <div class="page-body">
+
+      <div class="section-label">Customer signals</div>
+      <div class="card" style="margin-bottom: 1rem;">
+        <div class="research-item">
+          <div class="research-icon">★</div>
+          <div>
+            <div class="research-label">Sentiment Analysis</div>
+            <div class="research-title">April 2026 App Store Review Analysis — 4,000+ reviews</div>
+            <div class="research-meta">POS loan is category-leading. Credit card is failing at the first trust escalation moment. Current app is getting worse, not better. Connected reputation risks, not isolated product problems.</div>
+          </div>
+        </div>
+        <div class="research-item">
+          <div class="research-icon">📞</div>
+          <div>
+            <div class="research-label">Field Research</div>
+            <div class="research-title">Las Vegas Call Center Visit</div>
+            <div class="research-meta">Firsthand collections and support context. Direct customer voice on friction points and trust breakdown moments.</div>
+          </div>
+        </div>
+        <div class="research-item" style="border-bottom: none;">
+          <div class="research-icon">⚠</div>
+          <div>
+            <div class="research-label">Known Unknown</div>
+            <div class="research-title">Customer Research Gap — Multi-Product Expectations</div>
+            <div class="research-meta">Little to no existing research on what Sunbit customers want from a multi-product experience or a superapp offering. Should inform how confidently the room makes irreversible architectural decisions at NYC.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-gap">
+        <div class="section-label">Competitive research</div>
+        <div class="card">
+          <div class="research-item">
+            <div class="research-icon">🌍</div>
+            <div>
+              <div class="research-label">Competitive Analysis</div>
+              <div class="research-title">Modern Fintech App Experiences — Mindful Maximizer Lens</div>
+              <div class="research-meta" style="margin-bottom: 0.4rem;">Revolut · Klarna · Nubank · Dave · MoneyLion · Cleo · Function Health · Monarch — best-in-class patterns in intent navigation, trust escalation, AI-layer integration, and membership models.</div>
+            </div>
+          </div>
+          <div style="padding: 0 0 0.25rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; padding-left: 0;">
+              <span class="tag tag-done">Revolut AIR</span>
+              <span class="tag tag-done">Klarna</span>
+              <span class="tag tag-done">Nubank</span>
+              <span class="tag tag-done">Cleo 3.0</span>
+              <span class="tag tag-done">Dave</span>
+              <span class="tag tag-done">MoneyLion</span>
+              <span class="tag tag-done">Function Health</span>
+              <span class="tag tag-done">Monarch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-gap">
+        <div class="section-label">Internal documents</div>
+        <div class="card">
+          <div class="research-item">
+            <div class="research-icon">📄</div>
+            <div>
+              <div class="research-label">Architecture</div>
+              <div class="research-title">Sunbit 2030 Architecture Overview — Yair Erez</div>
+              <div class="research-meta">Key open questions on build approach. Agentic-ready as cross-cutting design principle. Customer state and intent layer architecture.</div>
+            </div>
+          </div>
+          <div class="research-item">
+            <div class="research-icon">📄</div>
+            <div>
+              <div class="research-label">Brand Strategy</div>
+              <div class="research-title">2030 Brand Positioning — Shachar Scott</div>
+              <div class="research-meta">Mindful Maximizers frame. "Personalized finance partner that unlocks your best way to pay." Rebrand targeting Q1–Q2 2027 simultaneous with 2030 v1 launch.</div>
+            </div>
+          </div>
+          <div class="research-item" style="border-bottom: none;">
+            <div class="research-icon">📄</div>
+            <div>
+              <div class="research-label">Experience Brief</div>
+              <div class="research-title">Sunbit 2030 Experience Design Brief — Amy Hillman</div>
+              <div class="research-meta">Five pillars. Tamara lifecycle model. Trust escalation from POS entry to full financial relationship. AI layer as product. Competitive implications for architecture.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footnote">
+      <span>Project Solstice · Sunbit 2030 Experience · Confidential</span>
+      <span>Amy Hillman · Head of Product Design · Updated June 2026</span>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+  const PASSWORD = "letsgooo";
+
+  function checkPassword() {
+    const val = document.getElementById("pw-input").value;
+    if (val === PASSWORD) {
+      document.getElementById("lock-screen").style.display = "none";
+      document.getElementById("app").style.display = "block";
+    } else {
+      document.getElementById("pw-error").textContent = "Incorrect passphrase. Try again.";
+      document.getElementById("pw-input").value = "";
+      document.getElementById("pw-input").focus();
+    }
+  }
+
+  document.getElementById("pw-input").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") checkPassword();
+    document.getElementById("pw-error").textContent = "";
+  });
+
+  function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".nav-links a").forEach(a => a.classList.remove("active"));
+    document.getElementById("page-" + id).classList.add("active");
+    const links = document.querySelectorAll(".nav-links a");
+    const pages = ["plan", "principles", "prototypes", "research"];
+    const idx = pages.indexOf(id);
+    if (links[idx]) links[idx].classList.add("active");
+    window.scrollTo(0, 0);
+    return false;
+  }
+</script>
+</body>
+</html>
