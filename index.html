@@ -11,23 +11,24 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #F5F3EE;
-    --surface: #FDFCFA;
-    --surface-alt: #EDEAE3;
-    --ink: #1A1814;
-    --ink-2: #4A4740;
-    --ink-3: #8A877F;
-    --accent: #C85A2A;
-    --accent-light: #F5EDE7;
-    --border: rgba(26,24,20,0.10);
-    --border-strong: rgba(26,24,20,0.18);
-    --gold: #B8933A;
-    --gold-light: #F7F1E3;
+    --bg: #EFF6F5;
+    --surface: #FAFCFC;
+    --surface-alt: #E2EEED;
+    --ink: #0D2233;
+    --ink-2: #3A4F5C;
+    --ink-3: #7A909C;
+    --accent: #1E7A5F;
+    --accent-light: #E4F2EE;
+    --border: rgba(13,34,51,0.09);
+    --border-strong: rgba(13,34,51,0.16);
+    --gold: #1E7A5F;
+    --gold-light: #E4F2EE;
   }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
+    background: #EFF6F5;
+    background: radial-gradient(ellipse at 80% 0%, #D6EFE8 0%, #EFF6F5 55%);
     color: var(--ink);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -541,48 +542,8 @@
       <div class="timeline">
 
         <div class="timeline-item">
-          <div class="timeline-date">Early 2027</div>
-          <div class="timeline-spine"><div class="timeline-dot future"></div><div class="timeline-line"></div></div>
-          <div class="timeline-content">
-            <div class="timeline-title">MVP Launch</div>
-            <div class="timeline-detail">2030 platform v1 in market. New brand. Intent-based navigation. Full trust lifecycle from POS entry to multi-product relationship.</div>
-            <div style="margin-top: 0.5rem;"><span class="tag tag-next">Target</span></div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Q4 2026 – Q1 2027</div>
-          <div class="timeline-spine"><div class="timeline-dot future"></div><div class="timeline-line"></div></div>
-          <div class="timeline-content">
-            <div class="timeline-title">MVP Build & Rebrand Alignment</div>
-            <div class="timeline-detail">Design in lockstep with engineering build. Rebrand (Shachar leading) lands simultaneously with 2030 v1 launch target.</div>
-            <div style="margin-top: 0.5rem;"><span class="tag tag-next">Planned</span></div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Q3 2026</div>
-          <div class="timeline-spine"><div class="timeline-dot future"></div><div class="timeline-line"></div></div>
-          <div class="timeline-content">
-            <div class="timeline-title">Design Program Begins</div>
-            <div class="timeline-detail">Full-fledged experience design work across five pillars. Customer research to close the insight gap on multi-product expectations. Maya returns from leave in September.</div>
-            <div style="margin-top: 0.5rem;"><span class="tag tag-next">Up next</span></div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">May 27–28</div>
-          <div class="timeline-spine"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
-          <div class="timeline-content">
-            <div class="timeline-title">NYC Leadership Workshop</div>
-            <div class="timeline-detail">Build vs. rebuild decision. Clickable prototype + competitive research. Attendees: Amy, Einav, Ornit, Yair, Arkadi, Bill Walsh.</div>
-            <div style="margin-top: 0.5rem;"><span class="tag tag-active">Immediate</span></div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
           <div class="timeline-date">Apr – May 2026</div>
-          <div class="timeline-spine"><div class="timeline-dot done"></div></div>
+          <div class="timeline-spine"><div class="timeline-dot done"></div><div class="timeline-line"></div></div>
           <div class="timeline-content">
             <div class="timeline-title">Onboarding & Discovery</div>
             <div class="timeline-detail">Sentiment analysis (4,000+ reviews), call center visit, competitive landscape, architecture deep-dive, brand positioning alignment with Shachar.</div>
@@ -590,29 +551,28 @@
           </div>
         </div>
 
-      </div>
-
-      <div class="section-gap">
-        <div class="section-label">Key open questions</div>
-        <div class="grid-2">
-          <div class="card-sm">
-            <h3 class="sub">Build vs. rebuild</h3>
-            <p class="muted">Existing Sunbit app or greenfield? Primary decision at NYC. The experience answer: can the current architecture support trust-state persistence across products?</p>
-          </div>
-          <div class="card-sm">
-            <h3 class="sub">Customer research gap</h3>
-            <p class="muted">Little to no existing research on what Sunbit customers want from a multi-product experience. Should give the room pause before committing to irreversible architecture.</p>
-          </div>
-          <div class="card-sm">
-            <h3 class="sub">PM governance model</h3>
-            <p class="muted">Dedicated PM for 2030 or four pillar leads serving that function collectively? Open question that affects how the program runs in Q3.</p>
-          </div>
-          <div class="card-sm">
-            <h3 class="sub">Super App ownership</h3>
-            <p class="muted">Organizational ownership of the Super App layer remains undefined. Bill has strong interest. Needs clarity before design work begins at scale.</p>
+        <div class="timeline-item">
+          <div class="timeline-date">May 27–28</div>
+          <div class="timeline-spine"><div class="timeline-dot done"></div><div class="timeline-line"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">NYC Leadership Workshop</div>
+            <div class="timeline-detail">Build vs. rebuild decision. Clickable prototype + competitive research. Attendees: Amy, Einav, Ornit, Yair, Arkadi, Bill Walsh.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-done">Complete</span></div>
           </div>
         </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">June 2026</div>
+          <div class="timeline-spine"><div class="timeline-dot"></div></div>
+          <div class="timeline-content">
+            <div class="timeline-title">Design Program Begins</div>
+            <div class="timeline-detail">Full-fledged experience design work across five pillars. Customer research to close the insight gap on multi-product expectations. Maya returns from leave in September.</div>
+            <div style="margin-top: 0.5rem;"><span class="tag tag-active">Active</span></div>
+          </div>
+        </div>
+
       </div>
+
     </div>
 
     <div class="footnote">
