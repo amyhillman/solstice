@@ -12,11 +12,11 @@
 
   :root {
     --bg: #EFF6F5;
-    --surface: #FAFCFC;
-    --surface-alt: #E2EEED;
+    --surface: #FDFEFD;
+    --surface-alt: #E8F0EF;
     --ink: #0D2233;
-    --ink-2: #3A4F5C;
-    --ink-3: #7A909C;
+    --ink-2: #2A3D4A;
+    --ink-3: #5A7280;
     --accent: #1E7A5F;
     --accent-light: #E4F2EE;
     --border: rgba(13,34,51,0.09);
@@ -539,7 +539,8 @@
 
     <div class="page-body">
       <div class="section-label">Timeline</div>
-      <div class="timeline">
+      <div class="card">
+      <div class="timeline" style="margin: 0;">
 
         <div class="timeline-item">
           <div class="timeline-date">Apr – May 2026</div>
@@ -561,7 +562,7 @@
           </div>
         </div>
 
-        <div class="timeline-item">
+        <div class="timeline-item" style="margin-bottom: 0;">
           <div class="timeline-date">June 2026</div>
           <div class="timeline-spine"><div class="timeline-dot"></div></div>
           <div class="timeline-content">
@@ -571,6 +572,7 @@
           </div>
         </div>
 
+      </div>
       </div>
 
     </div>
@@ -631,12 +633,6 @@
 
       </div>
 
-      <div class="section-gap">
-        <div class="section-label">What this means for NYC</div>
-        <div class="card">
-          <p style="font-size: 15px; line-height: 1.7; color: var(--ink-2);">The current app's failure to communicate trust state across products — silent card removals, invisible eligibility changes, no state on re-entry — is not a bug list. It's an architectural signal. The question for the room is not whether we fix the current app. The question is whether any architecture we choose can actually support these principles at scale, and what we don't yet know about our customers that should make us cautious about irreversible decisions.</p>
-        </div>
-      </div>
     </div>
 
     <div class="footnote">
@@ -740,37 +736,33 @@
 
     <div class="page-body">
 
-      <div class="section-gap">
-        <div class="section-label">Competitive research</div>
+      <div class="section-label">Competitive research</div>
         <div class="card">
           <div class="research-item">
-            <div class="research-icon">🌍</div>
-            <div>
+            <div style="flex: 1;">
               <div class="research-label">Competitive Analysis</div>
-              <div class="research-title"><a href="https://hush-boar-56511910.figma.site/" target="_blank" style="color: var(--accent); text-decoration: none;">Modern Fintech App Experiences — Mindful Maximizer Lens ↗</a></div>
-              <div class="research-meta" style="margin-bottom: 0.4rem;">Revolut · Klarna · Nubank · Dave · MoneyLion · Cleo · Function Health · Monarch — best-in-class patterns in intent navigation, trust escalation, AI-layer integration, and membership models.</div>
+              <div class="research-title"><a href="https://hush-boar-56511910.figma.site/" target="_blank" style="color: var(--accent); text-decoration: none;">Competitive Experience Research — Seven Proof Points ↗</a></div>
+              <div class="research-meta" style="margin-bottom: 0.4rem;">Seven companies that have already solved pieces of the platform problem Sunbit is building toward — selected as proof points that the experience capabilities the 2030 platform must deliver have been built, shipped, and validated at scale.</div>
             </div>
           </div>
           <div style="padding: 0 0 0.25rem;">
             <div style="display: flex; flex-wrap: wrap; gap: 6px; padding-left: 0;">
-              <span class="tag tag-done">Revolut AIR</span>
-              <span class="tag tag-done">Klarna</span>
               <span class="tag tag-done">Nubank</span>
-              <span class="tag tag-done">Cleo 3.0</span>
-              <span class="tag tag-done">Dave</span>
-              <span class="tag tag-done">MoneyLion</span>
-              <span class="tag tag-done">Function Health</span>
-              <span class="tag tag-done">Monarch</span>
+              <span class="tag tag-done">Monzo</span>
+              <span class="tag tag-done">Klarna</span>
+              <span class="tag tag-done">Cleo</span>
+              <span class="tag tag-done">Revolut</span>
+              <span class="tag tag-done">Sezzle</span>
+              <span class="tag tag-done">SoFi</span>
             </div>
           </div>
         </div>
-      </div>
 
       <div class="section-gap">
         <div class="section-label">Internal documents</div>
         <div class="card">
           <div class="research-item">
-            <div class="research-icon">📄</div>
+
             <div>
               <div class="research-label">Experience Capability Inventory</div>
               <div class="research-title"><a href="https://docs.google.com/document/d/1QMGaGlEYg48FlAE-aMKSBjxnTWftsDvvmAVhYy1UAHQ/edit?tab=t.fd10fc76nnn2" target="_blank" style="color: var(--accent); text-decoration: none;">Sunbit 2030 Experience Capability Inventory v0.2 — Amy Hillman ↗</a></div>
@@ -778,7 +770,7 @@
             </div>
           </div>
           <div class="research-item">
-            <div class="research-icon">📄</div>
+
             <div>
               <div class="research-label">Architecture</div>
               <div class="research-title"><a href="https://docs.google.com/document/d/1N97-9dow37xlIio3kDbzNXvft49gELHfFrE8KwOoZe0/edit?tab=t.0" target="_blank" style="color: var(--accent); text-decoration: none;">Sunbit 2030 Architecture Overview — Yair Erez ↗</a></div>
@@ -786,7 +778,7 @@
             </div>
           </div>
           <div class="research-item">
-            <div class="research-icon">📄</div>
+
             <div>
               <div class="research-label">Brand Strategy</div>
               <div class="research-title"><a href="https://docs.google.com/presentation/d/14YM7G__BUBwommsjr5BaK8fncKA5PiI2QfkMFfZyuBQ/edit?slide=id.g397b3511ddf_0_0#slide=id.g397b3511ddf_0_0" target="_blank" style="color: var(--accent); text-decoration: none;">2030 Brand Strategy — Shachar Scott ↗</a></div>
@@ -794,7 +786,7 @@
             </div>
           </div>
           <div class="research-item" style="border-bottom: none;">
-            <div class="research-icon">📄</div>
+
             <div>
               <div class="research-label">Experience Brief</div>
               <div class="research-title"><a href="https://docs.google.com/document/d/1lKk-VPUDjOI5UQ5kGNcRuErNohHLTL3owWwUusoEm_E/edit?tab=t.0#heading=h.qdrm81jpeqlk" target="_blank" style="color: var(--accent); text-decoration: none;">Sunbit 2030 Experience Design Brief — Amy Hillman ↗</a></div>
